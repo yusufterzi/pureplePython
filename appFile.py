@@ -24,31 +24,33 @@ USE_NNPACK=0
 
 @app.route("/getImageWithoutBg", methods=['GET','POST'])
 def getImageWithoutBg():
-    requestJson = request.get_json()
-    imgstring = requestJson['inputImage']
+    try:
+      requestJson = request.get_json()
+      imgstring = requestJson['inputImage']
 
-    image = Image.open(BytesIO(base64.b64decode(imgstring)))
+      image = Image.open(BytesIO(base64.b64decode(imgstring)))
 
-    img_byte_arr = io.BytesIO()
-    image.save(img_byte_arr, format='PNG')
-    img_byte_arr = img_byte_arr.getvalue()
-    data = np.asarray(img_byte_arr)
+      img_byte_arr = io.BytesIO()
+      image.save(img_byte_arr, format='PNG')
+      img_byte_arr = img_byte_arr.getvalue()
+      data = np.asarray(img_byte_arr)
 
-    result = remove(data)
+      result = remove(data)
 
-    img = Image.open(io.BytesIO(result)).convert("RGBA")
+      img = Image.open(io.BytesIO(result)).convert("RGBA")
 
-    output = BytesIO()
-    img.save(output, format='PNG')
-    im_data = output.getvalue()
+      output = BytesIO()
+      img.save(output, format='PNG')
+      im_data = output.getvalue()
 
-    image_data = base64.b64encode(im_data)
-    if not isinstance(image_data, str):
-        image_data = image_data.decode()
-    data_url = 'data:image/jpg;base64,' + image_data
-    
-    return jsonify({ "value" : data_url })
-
+      image_data = base64.b64encode(im_data)
+      if not isinstance(image_data, str):
+          image_data = image_data.decode()
+      data_url = 'data:image/jpg;base64,' + image_data
+      
+      return jsonify({ "value" : data_url })
+    except Exception:
+        pass
 if __name__ == '__main__':
     #http_server = WSGIServer(('',301), app)
     #http_server.serve_forever()
