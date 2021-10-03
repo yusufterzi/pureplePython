@@ -20,7 +20,7 @@ import io
 resource.setrlimit(resource.RLIMIT_NOFILE, (65536, 65536))     
 app = Flask(__name__)
 headers = {'Content-Type': 'application/json; charset=utf-8'}
-
+USE_NNPACK=0
 
 @app.route("/getImageWithoutBg", methods=['GET','POST'])
 def getImageWithoutBg():
