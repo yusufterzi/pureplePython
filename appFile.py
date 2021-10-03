@@ -22,7 +22,7 @@ app = Flask(__name__)
 headers = {'Content-Type': 'application/json; charset=utf-8'}
 
 
-@app.route("/getImageWithoutBg")
+@app.route("/getImageWithoutBg", methods=['GET','POST'])
 def getImageWithoutBg():
     requestJson = request.get_json()
     imgstring = requestJson['inputImage']
