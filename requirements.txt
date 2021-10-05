@@ -6,3 +6,4 @@ resource
 requests_cache
 bjoern
 rembg
+opencv-python
