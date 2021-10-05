@@ -1,0 +1,7 @@
+flask
+furl
+requests
+gevent
+resource
+requests_cache
+bjoern
